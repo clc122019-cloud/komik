@@ -1,6 +1,6 @@
 /* =========================================================
-   PERJUANGAN TIDAK PERNAH BERHENTI
-   STYLE KOMIK DIGITAL
+   KOMIK DIGITAL - STYLE UTAMA
+   MOBILE FULL WIDTH VERSION
    ========================================================= */
 
 
@@ -16,26 +16,36 @@ html,
 body {
     margin: 0;
     padding: 0;
+
     width: 100%;
     min-height: 100%;
+
+    background: #061827;
+
+    overflow-x: hidden;
 }
 
 body {
-    background: #061827;
     color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow-x: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
 
 /* =========================================================
-   APLIKASI UTAMA
+   APLIKASI
    ========================================================= */
 
 .comic-app {
     width: 100%;
     min-height: 100vh;
-    margin: 0 auto;
+
+    margin: 0;
+    padding: 0;
+
     background: #061827;
 }
 
@@ -51,8 +61,12 @@ body {
     min-height: 100vh;
 
     display: flex;
+
     justify-content: center;
     align-items: flex-start;
+
+    margin: 0;
+    padding: 0;
 
     background: #061827;
 
@@ -68,10 +82,15 @@ body {
     height: auto;
 
     max-width: 100%;
+
+    margin: 0;
+    padding: 0;
 }
 
 
-/* Tombol transparan pada cover */
+/* =========================================================
+   TOMBOL MULAI COVER
+   ========================================================= */
 
 .cover-start-button {
     position: absolute;
@@ -83,6 +102,9 @@ body {
 
     width: 42%;
     height: 9%;
+
+    margin: 0;
+    padding: 0;
 
     border: none;
     outline: none;
@@ -104,8 +126,12 @@ body {
     min-height: 100vh;
 
     display: flex;
+
     flex-direction: column;
     align-items: center;
+
+    margin: 0;
+    padding: 0;
 
     background: #061827;
 
@@ -114,7 +140,7 @@ body {
 
 
 /* =========================================================
-   CONTAINER HALAMAN KOMIK
+   CONTAINER HALAMAN
    ========================================================= */
 
 .page-container {
@@ -134,27 +160,14 @@ body {
    GAMBAR KOMIK
    ========================================================= */
 
-/*
-   PENTING:
-
-   Jangan gunakan:
-       height: 100vh;
-
-   Jangan gunakan:
-       object-fit: cover;
-
-   Karena akan membuat gambar terpotong.
-
-   Gambar mengikuti rasio aslinya.
-*/
-
 #comicPage {
     display: block;
 
     width: 100%;
+
     height: auto;
 
-    max-width: 100%;
+    max-width: none;
 
     margin: 0;
     padding: 0;
@@ -178,6 +191,9 @@ body {
     width: 40%;
     height: 9%;
 
+    margin: 0;
+    padding: 0;
+
     border: none;
     outline: none;
 
@@ -198,9 +214,13 @@ body {
     min-height: 58px;
 
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
+    gap: 10px;
+
+    margin: 0;
     padding: 8px 14px;
 
     background: #071c2d;
@@ -212,11 +232,15 @@ body {
 }
 
 
-/* Tombol kontrol */
+/* =========================================================
+   TOMBOL READER
+   ========================================================= */
 
 .reader-controls button {
     width: 42px;
     height: 38px;
+
+    flex-shrink: 0;
 
     border: 1px solid #c88a24;
     border-radius: 8px;
@@ -229,7 +253,9 @@ body {
 
     cursor: pointer;
 
-    transition: .2s ease;
+    transition:
+        background .2s ease,
+        color .2s ease;
 }
 
 .reader-controls button:hover {
@@ -238,7 +264,9 @@ body {
 }
 
 
-/* Informasi halaman */
+/* =========================================================
+   INFO HALAMAN
+   ========================================================= */
 
 .page-info {
     display: flex;
@@ -248,6 +276,10 @@ body {
     align-items: center;
     justify-content: center;
 
+    flex: 1;
+
+    min-width: 0;
+
     text-align: center;
 
     line-height: 1.2;
@@ -255,7 +287,16 @@ body {
 
 #pageTitle {
     font-size: 12px;
+
     font-weight: 700;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    max-width: 70vw;
 }
 
 #pageNumber {
@@ -278,11 +319,13 @@ body {
     min-height: 58px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     gap: 9px;
 
+    margin: 0;
     padding: 8px 12px;
 
     background: #061827;
@@ -291,7 +334,9 @@ body {
 }
 
 
-/* Tombol bottom */
+/* =========================================================
+   TOMBOL BOTTOM
+   ========================================================= */
 
 .bottom-bar button {
     width: 40px;
@@ -310,7 +355,9 @@ body {
 
     cursor: pointer;
 
-    transition: .2s ease;
+    transition:
+        background .2s ease,
+        color .2s ease;
 }
 
 .bottom-bar button:hover {
@@ -319,7 +366,9 @@ body {
 }
 
 
-/* Progress */
+/* =========================================================
+   PROGRESS
+   ========================================================= */
 
 #progressText {
     flex: 1;
@@ -350,18 +399,11 @@ body {
         max-width: 100%;
     }
 
-    .reader-controls {
-        min-height: 52px;
-    }
-
-    .bottom-bar {
-        min-height: 52px;
-    }
 }
 
 
 /* =========================================================
-   HP
+   MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
@@ -369,7 +411,9 @@ body {
     html,
     body {
         width: 100%;
-        min-height: 100%;
+
+        margin: 0;
+        padding: 0;
 
         overflow-x: hidden;
     }
@@ -381,35 +425,44 @@ body {
 
     .comic-app {
         width: 100%;
-        min-height: 100vh;
+
+        margin: 0;
+        padding: 0;
     }
 
 
     /* -----------------------------------------------------
-       COVER HP
+       COVER
        ----------------------------------------------------- */
 
     .cover-screen {
         width: 100%;
+
         min-height: auto;
 
         display: block;
 
-        overflow: hidden;
+        margin: 0;
+        padding: 0;
     }
+
 
     .cover-image {
         display: block;
 
         width: 100%;
+
         height: auto;
 
         max-width: none;
+
+        margin: 0;
+        padding: 0;
     }
 
 
     /* -----------------------------------------------------
-       READER HP
+       READER
        ----------------------------------------------------- */
 
     .reader-screen {
@@ -419,35 +472,41 @@ body {
 
         display: block;
 
+        margin: 0;
+        padding: 0;
+
         background: #061827;
     }
 
 
     /* -----------------------------------------------------
-       HALAMAN KOMIK HP
+       PAGE CONTAINER
        ----------------------------------------------------- */
 
     .page-container {
-        width: 100%;
+        width: 100vw;
+
         max-width: none;
 
         margin: 0;
         padding: 0;
+
+        line-height: 0;
     }
 
 
-    /*
-       INI YANG MEMBUAT GAMBAR MEMENUHI LEBAR HP
-       TANPA RUANG KOSONG.
-    */
+    /* -----------------------------------------------------
+       GAMBAR FULL WIDTH HP
+       ----------------------------------------------------- */
 
     #comicPage {
         display: block;
 
-        width: 100%;
-        height: auto;
+        width: 100vw;
 
         max-width: none;
+
+        height: auto;
 
         margin: 0;
         padding: 0;
@@ -457,11 +516,12 @@ body {
 
 
     /* -----------------------------------------------------
-       TOMBOL PENGANTAR
+       TOMBOL LANJUT PENGANTAR
        ----------------------------------------------------- */
 
     .pengantar-next-button {
         left: 50%;
+
         bottom: 7%;
 
         width: 42%;
@@ -470,14 +530,17 @@ body {
 
 
     /* -----------------------------------------------------
-       READER CONTROLS HP
+       READER CONTROLS
        ----------------------------------------------------- */
 
     .reader-controls {
         width: 100%;
 
+        max-width: none;
+
         min-height: 45px;
 
+        margin: 0;
         padding: 5px 7px;
 
         gap: 5px;
@@ -496,10 +559,14 @@ body {
 
     .page-info {
         flex: 1;
+
+        min-width: 0;
     }
 
 
     #pageTitle {
+        max-width: 60vw;
+
         font-size: 9px;
     }
 
@@ -510,14 +577,17 @@ body {
 
 
     /* -----------------------------------------------------
-       BOTTOM BAR HP
+       BOTTOM BAR
        ----------------------------------------------------- */
 
     .bottom-bar {
         width: 100%;
 
+        max-width: none;
+
         min-height: 48px;
 
+        margin: 0;
         padding: 5px 6px;
 
         gap: 5px;
@@ -537,6 +607,7 @@ body {
     #progressText {
         font-size: 8px;
     }
+
 }
 
 
@@ -565,6 +636,7 @@ body {
     #progressText {
         font-size: 7px;
     }
+
 }
 
 
@@ -578,10 +650,18 @@ body {
 
 :fullscreen .reader-screen {
     width: 100%;
+
     min-height: 100vh;
+}
+
+:fullscreen .page-container {
+    width: 100%;
 }
 
 :fullscreen #comicPage {
     width: 100%;
+
     height: auto;
+
+    max-width: none;
 }
