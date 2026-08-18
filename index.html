@@ -20,7 +20,8 @@
 
         <section
             id="coverScreen"
-            class="cover-screen">
+            class="cover-screen"
+            onclick="mulaiKomik()">
 
             <img
                 src="assets/cover.png"
@@ -31,7 +32,7 @@
                 id="startButton"
                 class="cover-start-button"
                 type="button"
-                onclick="mulaiKomik()"
+                onclick="event.stopPropagation(); mulaiKomik()"
                 aria-label="Mulai Membaca">
             </button>
 
@@ -39,7 +40,7 @@
 
 
         <!-- =========================================
-             READER KOMIK
+             READER
         ========================================== -->
 
         <section
@@ -54,7 +55,7 @@
                     src="assets/pengantar.png"
                     alt="Pengantar">
 
-                <!-- TOMBOL LANJUT PENGANTAR -->
+                <!-- Tombol lanjut khusus pengantar -->
 
                 <button
                     id="pengantarNextButton"
@@ -68,8 +69,7 @@
 
 
             <!-- =========================================
-                 NAVIGASI ATAS
-                 DISEMBUNYIKAN OLEH CSS
+                 READER CONTROLS
             ========================================== -->
 
             <div class="reader-controls">
@@ -104,7 +104,7 @@
 
 
             <!-- =========================================
-                 BOTTOM NAVIGATION
+                 BOTTOM BAR
             ========================================== -->
 
             <div class="bottom-bar">
@@ -121,7 +121,7 @@
                 </button>
 
 
-                <!-- SEBELUMNYA -->
+                <!-- PREVIOUS -->
 
                 <button
                     id="bottomPrevButton"
@@ -145,14 +145,14 @@
                 </button>
 
 
-                <!-- INFORMASI HALAMAN -->
+                <!-- PROGRESS -->
 
                 <span id="progressText">
                     PENGANTAR
                 </span>
 
 
-                <!-- BERIKUTNYA -->
+                <!-- NEXT -->
 
                 <button
                     id="bottomNextButton"
@@ -183,7 +183,7 @@
 
 
     <!-- =========================================
-         SCRIPT UTAMA
+         SCRIPT
     ========================================== -->
 
     <script src="script.js"></script>
