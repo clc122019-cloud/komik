@@ -1,5 +1,6 @@
 // =========================================
 // KOMIK DIGITAL - SCRIPT UTAMA + AUDIO
+// Versi Sinkronisasi Gambar & Audio
 // =========================================
 
 
@@ -104,7 +105,7 @@ const pages = [
 
 
 // =========================================
-// VARIABEL UTAMA
+// VARIABEL
 // =========================================
 
 let currentPage = 0;
@@ -115,16 +116,121 @@ let audioMuted = false;
 
 
 // =========================================
+// CACHE GAMBAR
+// =========================================
+
+const imageCache = {};
+
+
+// =========================================
+// PRELOAD GAMBAR
+// =========================================
+
+function preloadImage(index) {
+
+    if (
+        index < 0 ||
+        index >= pages.length
+    ) {
+        return;
+    }
+
+    if (imageCache[index]) {
+        return imageCache[index];
+    }
+
+    const img = new Image();
+
+    img.src = pages[index].image;
+
+    imageCache[index] = img;
+
+    return img;
+}
+
+
+// =========================================
+// PRELOAD SEMUA GAMBAR
+// =========================================
+
+function preloadSemuaGambar() {
+
+    pages.forEach(function (_, index) {
+
+        preloadImage(index);
+
+    });
+
+}
+
+
+// =========================================
+// PRELOAD AUDIO
+// =========================================
+
+const audioCache = {};
+
+function preloadAudio(index) {
+
+    if (
+        index < 0 ||
+        index >= pages.length
+    ) {
+        return;
+    }
+
+    if (audioCache[index]) {
+        return audioCache[index];
+    }
+
+    const audio =
+        new Audio();
+
+    audio.src =
+        pages[index].audio;
+
+    audio.preload =
+        "auto";
+
+    audio.load();
+
+    audioCache[index] =
+        audio;
+
+    return audio;
+}
+
+
+// =========================================
+// PRELOAD SEMUA AUDIO
+// =========================================
+
+function preloadSemuaAudio() {
+
+    pages.forEach(function (_, index) {
+
+        preloadAudio(index);
+
+    });
+
+}
+
+
+// =========================================
 // MULAI KOMIK
 // =========================================
 
 function mulaiKomik() {
 
     const cover =
-        document.getElementById("coverScreen");
+        document.getElementById(
+            "coverScreen"
+        );
 
     const reader =
-        document.getElementById("readerScreen");
+        document.getElementById(
+            "readerScreen"
+        );
 
     if (!cover || !reader) {
 
@@ -135,9 +241,11 @@ function mulaiKomik() {
         return;
     }
 
-    cover.style.display = "none";
+    cover.style.display =
+        "none";
 
-    reader.style.display = "flex";
+    reader.style.display =
+        "flex";
 
     currentPage = 0;
 
@@ -167,43 +275,48 @@ function tampilkanHalaman() {
         pages[currentPage];
 
     const comicPage =
-        document.getElementById("comicPage");
+        document.getElementById(
+            "comicPage"
+        );
 
     const pageTitle =
-        document.getElementById("pageTitle");
+        document.getElementById(
+            "pageTitle"
+        );
 
     const pageNumber =
-        document.getElementById("pageNumber");
+        document.getElementById(
+            "pageNumber"
+        );
 
     const progressText =
-        document.getElementById("progressText");
+        document.getElementById(
+            "progressText"
+        );
 
     const prevButton =
-        document.getElementById("prevButton");
+        document.getElementById(
+            "prevButton"
+        );
 
     const nextButton =
-        document.getElementById("nextButton");
+        document.getElementById(
+            "nextButton"
+        );
 
 
     if (!comicPage) {
 
-        console.error(
-            "comicPage tidak ditemukan."
-        );
-
         return;
+
     }
 
 
     // =====================================
-    // GAMBAR
+    // HENTIKAN AUDIO SEBELUM GANTI GAMBAR
     // =====================================
 
-    comicPage.src =
-        page.image;
-
-    comicPage.alt =
-        page.title;
+    hentikanAudio();
 
 
     // =====================================
@@ -234,10 +347,6 @@ function tampilkanHalaman() {
     }
 
 
-    // =====================================
-    // TOMBOL NAVIGASI
-    // =====================================
-
     if (prevButton) {
 
         prevButton.disabled =
@@ -249,13 +358,14 @@ function tampilkanHalaman() {
     if (nextButton) {
 
         nextButton.disabled =
-            currentPage === pages.length - 1;
+            currentPage ===
+            pages.length - 1;
 
     }
 
 
     // =====================================
-    // KURSOR PENGANTAR
+    // KURSOR
     // =====================================
 
     if (currentPage === 0) {
@@ -272,21 +382,114 @@ function tampilkanHalaman() {
 
 
     // =====================================
-    // AUDIO
+    // AMBIL GAMBAR DARI CACHE
     // =====================================
 
-    putarAudioHalaman();
+    const cachedImage =
+        preloadImage(currentPage);
+
+
+    // =====================================
+    // JIKA GAMBAR SUDAH SELESAI
+    // =====================================
+
+    if (
+        cachedImage.complete &&
+        cachedImage.naturalWidth > 0
+    ) {
+
+        comicPage.src =
+            cachedImage.src;
+
+        setelahGambarSiap();
+
+        return;
+
+    }
+
+
+    // =====================================
+    // JIKA GAMBAR BELUM SELESAI
+    // =====================================
+
+    cachedImage.onload =
+        function () {
+
+            comicPage.src =
+                cachedImage.src;
+
+            setelahGambarSiap();
+
+        };
+
+
+    cachedImage.onerror =
+        function () {
+
+            console.error(
+                "Gagal memuat gambar:",
+                page.image
+            );
+
+            comicPage.src =
+                page.image;
+
+        };
 
 }
 
 
 // =========================================
-// PUTAR AUDIO HALAMAN
+// SETELAH GAMBAR SIAP
+// =========================================
+
+function setelahGambarSiap() {
+
+    /*
+       Beri sedikit waktu agar browser
+       benar-benar menyelesaikan rendering
+       gambar sebelum audio dimulai.
+    */
+
+    requestAnimationFrame(
+        function () {
+
+            requestAnimationFrame(
+                function () {
+
+                    putarAudioHalaman();
+
+                }
+            );
+
+        }
+    );
+
+
+    // =====================================
+    // SIAPKAN HALAMAN BERIKUTNYA
+    // =====================================
+
+    preloadImage(
+        currentPage + 1
+    );
+
+    preloadImage(
+        currentPage - 1
+    );
+
+    preloadAudio(
+        currentPage + 1
+    );
+
+}
+
+
+// =========================================
+// PUTAR AUDIO
 // =========================================
 
 function putarAudioHalaman() {
-
-    // Hentikan audio sebelumnya
 
     hentikanAudio();
 
@@ -302,58 +505,54 @@ function putarAudioHalaman() {
     }
 
 
+    // Gunakan audio cache
+
+    const cachedAudio =
+        preloadAudio(currentPage);
+
+
+    if (!cachedAudio) {
+
+        return;
+
+    }
+
+
     currentAudio =
-        new Audio(page.audio);
+        cachedAudio;
 
 
-    currentAudio.preload =
-        "auto";
+    currentAudio.currentTime =
+        0;
 
     currentAudio.volume =
         1;
-
 
     currentAudio.muted =
         audioMuted;
 
 
-    // =====================================
-    // SAAT AUDIO SELESAI
-    // =====================================
-
-    currentAudio.addEventListener(
-        "ended",
+    currentAudio.onended =
         function () {
 
             updateAudioButton();
 
-        }
-    );
+        };
 
 
-    // =====================================
-    // PLAY
-    // =====================================
-
-    const hasil =
+    const playPromise =
         currentAudio.play();
 
 
-    if (hasil !== undefined) {
+    if (
+        playPromise !== undefined
+    ) {
 
-        hasil.catch(
+        playPromise.catch(
             function (error) {
 
-                /*
-                 Browser dapat memblokir
-                 autoplay audio.
-
-                 Audio akan tetap tersedia
-                 melalui tombol audio.
-                */
-
                 console.log(
-                    "Autoplay audio diblokir browser:",
+                    "Autoplay diblokir browser:",
                     error
                 );
 
@@ -383,9 +582,11 @@ function hentikanAudio() {
         currentAudio.currentTime =
             0;
 
-        currentAudio.src = "";
+        currentAudio.onended =
+            null;
 
-        currentAudio = null;
+        currentAudio =
+            null;
 
     }
 
@@ -393,7 +594,7 @@ function hentikanAudio() {
 
 
 // =========================================
-// PLAY / PAUSE AUDIO
+// PLAY / PAUSE
 // =========================================
 
 function toggleAudio() {
@@ -407,7 +608,9 @@ function toggleAudio() {
     }
 
 
-    if (currentAudio.paused) {
+    if (
+        currentAudio.paused
+    ) {
 
         currentAudio.play();
 
@@ -424,7 +627,7 @@ function toggleAudio() {
 
 
 // =========================================
-// MUTE / UNMUTE
+// MUTE
 // =========================================
 
 function toggleMute() {
@@ -571,6 +774,7 @@ function kembaliKeCover() {
 
     hentikanAudio();
 
+
     const reader =
         document.getElementById(
             "readerScreen"
@@ -650,13 +854,6 @@ function layarPenuh() {
 // =========================================
 // KLIK LANJUT PENGANTAR
 // =========================================
-//
-// Tombol LANJUT berada di dalam gambar
-// pengantar.png.
-//
-// Area klik dibaca berdasarkan posisi
-// relatif terhadap gambar.
-// =========================================
 
 document.addEventListener(
     "click",
@@ -688,8 +885,6 @@ document.addEventListener(
             comicPage.getBoundingClientRect();
 
 
-        // Pastikan klik ada di gambar
-
         if (
 
             event.clientX < rect.left ||
@@ -713,8 +908,6 @@ document.addEventListener(
             (event.clientY - rect.top)
             / rect.height;
 
-
-        // Area LANJUT
 
         if (
 
@@ -774,6 +967,16 @@ document.addEventListener(
 document.addEventListener(
     "DOMContentLoaded",
     function () {
+
+        /*
+           Persiapkan semua gambar dan audio
+           sejak awal agar perpindahan halaman
+           lebih cepat.
+        */
+
+        preloadSemuaGambar();
+
+        preloadSemuaAudio();
 
         tampilkanHalaman();
 
