@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Perjuangan Tidak Pernah Berhenti</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="comic-app">
+
+        <!-- =========================================
+             COVER
+        ========================================== -->
+
+        <section
+            id="coverScreen"
+            class="cover-screen">
+
+            <img
+                src="assets/cover.png"
+                class="cover-image"
+                alt="Cover Komik Digital">
+
+            <button
+                id="startButton"
+                class="cover-start-button"
+                type="button"
+                onclick="mulaiKomik()"
+                aria-label="Mulai Membaca">
+            </button>
+
+        </section>
+
+
+        <!-- =========================================
+             READER KOMIK
+        ========================================== -->
+
+        <section
+            id="readerScreen"
+            class="reader-screen"
+            style="display: none;">
+
+            <div class="page-container">
+
+                <img
+                    id="comicPage"
+                    src="assets/pengantar.png"
+                    alt="Pengantar">
+
+                <!-- TOMBOL LANJUT PENGANTAR -->
+
+                <button
+                    id="pengantarNextButton"
+                    class="pengantar-next-button"
+                    type="button"
+                    onclick="halamanBerikutnya()"
+                    aria-label="Lanjut ke Halaman 1">
+                </button>
+
+            </div>
+
+
+            <!-- =========================================
+                 NAVIGASI ATAS
+                 DISEMBUNYIKAN OLEH CSS
+            ========================================== -->
+
+            <div class="reader-controls">
+
+                <button
+                    id="prevButton"
+                    type="button"
+                    onclick="halamanSebelumnya()">
+                    ◀
+                </button>
+
+                <div class="page-info">
+
+                    <span id="pageTitle">
+                        PENGANTAR
+                    </span>
+
+                    <span id="pageNumber">
+                        PENGANTAR
+                    </span>
+
+                </div>
+
+                <button
+                    id="nextButton"
+                    type="button"
+                    onclick="halamanBerikutnya()">
+                    ▶
+                </button>
+
+            </div>
+
+
+            <!-- =========================================
+                 BOTTOM NAVIGATION
+            ========================================== -->
+
+            <div class="bottom-bar">
+
+                <!-- HOME -->
+
+                <button
+                    id="homeButton"
+                    type="button"
+                    title="Kembali ke Cover"
+                    onclick="kembaliKeCover()"
+                    aria-label="Kembali ke Cover">
+                    🏠
+                </button>
+
+
+                <!-- SEBELUMNYA -->
+
+                <button
+                    id="bottomPrevButton"
+                    type="button"
+                    title="Halaman Sebelumnya"
+                    onclick="halamanSebelumnya()"
+                    aria-label="Halaman Sebelumnya">
+                    ◀
+                </button>
+
+
+                <!-- AUDIO -->
+
+                <button
+                    id="audioButton"
+                    type="button"
+                    title="Putar Audio"
+                    onclick="toggleAudio()"
+                    aria-label="Putar Audio">
+                    🔊
+                </button>
+
+
+                <!-- INFORMASI HALAMAN -->
+
+                <span id="progressText">
+                    PENGANTAR
+                </span>
+
+
+                <!-- BERIKUTNYA -->
+
+                <button
+                    id="bottomNextButton"
+                    type="button"
+                    title="Halaman Berikutnya"
+                    onclick="halamanBerikutnya()"
+                    aria-label="Halaman Berikutnya">
+                    ▶
+                </button>
+
+
+                <!-- FULLSCREEN -->
+
+                <button
+                    id="fullscreenButton"
+                    type="button"
+                    title="Layar Penuh"
+                    onclick="toggleFullscreen()"
+                    aria-label="Layar Penuh">
+                    ⛶
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         SCRIPT UTAMA
+    ========================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
